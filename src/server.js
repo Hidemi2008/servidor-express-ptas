@@ -1,28 +1,34 @@
 import express, { json } from "express"
 
+import Database from "./databases.js"
+
 const app = express()
 
 app.use(express.json())
 
-const usuarios = []
+const database = new Database()
 
 app.get("/", (req, res) => {
     res.send("Você está na página principal")
+})
+
+app.get("/user", (req, res) => {
+    const data = database.select("usuario")
+
+    res.status(200).json(data)
 })
 
 app.post("/user", (req, res) => {
     const { nome, idade, email } = req.body
 
     if (nome && idade && email) {
-        usuarios.push({ nome, idade, email })
+        database.insert("usuario",{nome,idade,email})
+
         return res.status(201).send("Usuário criado")
     }
 
     return res.status(400).send("Informações inválidas")
 })
 
-app.get("/user", (req, res) => {
-    res.status(200).json(usuarios)
-})
 
 app.listen(3333, () => console.log("Hello word!!!"))
