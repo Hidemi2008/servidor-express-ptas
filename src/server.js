@@ -8,44 +8,36 @@ app.use(express.json())
 
 const database = new Database()
 
-app.get("/", (req, res) => {
-    res.send("Você está na página principal")
+app.get("/pratos", (req,res) => {
+    res.send("Retornando pratos")
 })
 
-app.get("/user", (req, res) => {
-    const data = database.select("usuario")
-
-    res.status(200).json(data)
+app.post("/pratos", (req,res) => {
+    res.send("Salvando novo prato")
 })
 
-app.post("/user", (req, res) => {
-    const { nome, idade, email } = req.body
-
-    if (nome && idade && email) {
-        database.insert("usuario", { nome, idade, email })
-
-        return res.status(201).send("Usuário criado")
-    }
-
-    return res.status(400).send("Informações inválidas")
+app.put("/pratos", (req,res) => {
+    res.send("Alterando prato")
 })
 
-app.get("/user/produtos", (req, res) => {
-    const data = database.select("produtos")
-
-    res.status(200).json(data)
+app.delete("/pratos", (req,res) => {
+    res.send("Deletando prato")
 })
 
-app.post("/user/produtos", (req,res) => {
-    const { nome, valor, quant } = req.body
+app.get("/comanda", (req,res) => {
+    res.send("Retornando comanda")
+})
 
-    if (nome && valor && quant) {
-        database.insert("produtos", {nome, valor, quant})
+app.post("/comanda", (req,res) => {
+    res.send("Salvando novo comanda")
+})
 
-        return res.status(201).send("Produto criado")
-    }
+app.put("/comanda", (req,res) => {
+    res.send("Alterando comanda")
+})
 
-    return res.status(400).send("Informações inválidas")
+app.delete("/comanda", (req,res) => {
+    res.send("Deletando comanda")
 })
 
 
