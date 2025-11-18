@@ -1,13 +1,18 @@
-import express from "express";
-import itensRoutes from "./routes/itens.routes.js";
-import categoriasRoutes from "./routes/categorias.routes.js";
-import usuariosRoutes from "./routes/usuarios.routes.js";
+import express from "express"
+import mongoose from "mongoose"
 
-const app = express();
-app.use(express.json());
+import usuarioRoutes from "./routes/usuarioRoutes.js"
+import clienteRoutes from "./routes/clienteRoutes.js"
+import servicoRoutes from "./routes/servicoRoutes.js"
 
-app.use("/itens", itensRoutes);
-app.use("/categorias", categoriasRoutes);
-app.use("/usuarios", usuariosRoutes);
+const app = express()
+app.use(express.json())
 
-app.listen(3000, () => console.log("Servidor rodando na porta 3000"));
+app.use("/usuarios", usuarioRoutes)
+app.use("/clientes", clienteRoutes)
+app.use("/servicos", servicoRoutes)
+
+mongoose.connect("mongodb://localhost:27017/estudio")
+    .then(() => console.log("Conectado ao MongoDB"))
+
+app.listen(3333, () => console.log("Servidor rodando em http://localhost:3333"))
